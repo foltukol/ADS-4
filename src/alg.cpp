@@ -7,7 +7,7 @@ int countPairs1(int *arr, int len, int value) {
         pair_numbers++;
       }
     }
-  } 
+  }
   return pair_numbers;
 }
 int countPairs2(int *arr, int len, int value) {
@@ -17,15 +17,30 @@ int countPairs2(int *arr, int len, int value) {
   while (left_number < right_number) {
     int sum = arr[left_number] + arr[right_number];
     if (sum == value) {
-      pair_numbers++;
-      left_number++;
-      right_number--;
-    } 
+      if (arr[left_number] == arr[right_number]) {
+        int count = right_number - left_number + 1;
+        pair_numbers += count * (count - 1) / 2;
+        break;
+      }
+      int left_val = arr[left_number];
+      int right_val = arr[right_number];
+      int left_count = 0;
+      int right_count = 0;
+      while (left_number < len && arr[left_number] == left_val) {
+        left_number++;
+        left_count++;
+      }
+      while (right_number >= 0 && arr[right_number] == right_val) {
+        right_number--;
+        right_count++;
+      }
+      pair_numbers += left_count * right_count;
+    }
     else if (sum < value) {
       left_number++;
-    } 
+    }
     else {
-    right_number--;
+      right_number--;
     }
   }
   return pair_numbers;
